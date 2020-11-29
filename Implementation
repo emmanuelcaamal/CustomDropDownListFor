@@ -1,0 +1,31 @@
+/*
+Si quieres agregar más atributos data deberás proporcionarlos en DataAttributes, separados por coma:
+DataAttributes = "CategoryType,OtroValue"
+*/
+
+
+/*Modelo de datos de ejemplo*/
+public class CategoryExample
+{
+  [Display(Name = "Categoría")]
+  [Required(ErrorMessage = "Seleccione una categoría")]
+  public Guid CategoryId { get; set; }
+
+  public List<CategoryModel> Categories { get; set; }
+}
+
+public class CategoryModel
+{
+    public Guid? CategoryId { get; set; }
+
+    public string Name { get; set; }
+
+    public ECategoryType CategoryType { get; set; }
+}
+
+
+<!--Código Html-->
+@model CategoryExample
+@Html.LabelFor(x => x.CategoryId, new { @class = "control-label" })
+@Html.DropDownListWithTagFor(x => x.CategoryId, "Seleccione una opción", Model.Categories, new DropDownCutomValues { DataAttributes = "CategoryType", Text = "Name", Value = "CategoryId" }, Model.CategoryId.ToString(), new { @class = "form-control", @width = "100%" })
+@Html.ValidationMessageFor(x => x.CategoryId)
